@@ -1,0 +1,705 @@
+:root {
+    --bg-1: #3a7bd5;
+    --bg-2: #00d2ff;
+    --glass: rgba(255, 255, 255, 0.04);
+    --glass-2: rgba(255, 255, 255, 0.06);
+    --accent: #ffdd57;
+    --text: #e9f0fb;
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, rgba(10, 20, 40, 0.45), rgba(10, 20, 40, 0.25)), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1650&q=80') center/cover no-repeat;
+    color: rgb(240, 238, 238);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+}
+
+.app-wrap {
+    width: 100%;
+    max-width: 920px
+}
+
+.panel {
+    backdrop-filter: blur(8px) saturate(120%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22)
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px
+}
+
+.title-wrap {
+    display: grid;
+    gap: 8px;
+    align-items: start
+}
+
+.title {
+    margin: 0;
+    font-weight: 700
+}
+
+.weather-emojis {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+.weather-emoji,
+.card-mood {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 18px rgba(2, 6, 23, 0.14);
+    animation: emojiFloat 2.8s ease-in-out infinite
+}
+
+.weather-emoji:nth-child(2),
+.card-mood:nth-child(2) {
+    animation-delay: .18s
+}
+
+.weather-emoji:nth-child(3),
+.card-mood:nth-child(3) {
+    animation-delay: .36s
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+.controls input {
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: transparent;
+    color: var(--text);
+    outline: none
+}
+
+/* modern icon buttons */
+.controls button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 36px;
+    padding: 6px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    transition: transform .18s ease, box-shadow .18s ease, background .18s
+}
+
+.controls button .material-icons {
+    font-size: 20px;
+    color: var(--text)
+}
+
+.controls button:active {
+    transform: translateY(1px)
+}
+
+.controls button:hover {
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.24);
+    transform: translateY(-3px)
+}
+
+.meta {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px
+}
+
+.unit-toggle button {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    padding: 6px 8px;
+    border-radius: 8px;
+    cursor: pointer
+}
+
+.unit-toggle button.active {
+    background: var(--accent);
+    color: #112
+}
+
+.result {
+    margin-top: 12px
+}
+
+.loading {
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    border: 7px solid rgba(255, 255, 255, 0.12);
+    border-top-color: var(--accent);
+    margin: 14px auto;
+    animation: spin 1s linear infinite
+}
+
+.hidden {
+    display: none
+}
+
+/* compact square card */
+.card {
+    /* width: 320px;
+    height: 320px; */
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: "main" "details" "forecast";
+    gap: 8px;
+    padding: 12px;
+    border-radius: 14px;
+    font-family: 'Poppins', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.32);
+    transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 48px rgba(2, 6, 23, 0.42)
+}
+
+.weather-emoji:hover,
+.card-mood:hover {
+    transform: translateY(-3px) scale(1.05)
+}
+
+.card-main {
+    grid-area: main;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-direction: row;
+    text-align: left;
+    width: 100%
+}
+
+.card-mood-strip {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap
+}
+
+.icon {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 -6px 14px rgba(255, 255, 255, 0.02)
+}
+
+#loc {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0
+}
+
+.temp {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 2px 0 0 0;
+    letter-spacing: -0.4px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.42)
+}
+
+.desc {
+    font-size: 12px;
+    opacity: 0.9;
+    font-style: italic
+}
+
+.card-details {
+    grid-area: details;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    align-items: stretch;
+    width: 100%
+}
+
+.card-details>div {
+    background: transparent;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.card-details>div:nth-child(2),
+.card-details>div:nth-child(4) {
+    border-left: 1px solid rgba(255, 255, 255, 0.04);
+    padding-left: 12px
+}
+
+.forecast {
+    grid-area: forecast;
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    justify-content: space-between
+}
+
+.forecast .day {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.01));
+    padding: 6px;
+    border-radius: 8px;
+    min-width: 46px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform .18s ease, box-shadow .18s;
+    cursor: default
+}
+
+.forecast .day img {
+    width: 40px;
+    height: 40px
+}
+
+.forecast .day .day-temp {
+    font-weight: 700;
+    margin-top: 4px
+}
+
+/* hover and entrance animations */
+.forecast .day:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(2, 6, 23, 0.16)
+}
+
+.card {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: cardPop .36s cubic-bezier(.2, .9, .3, 1) forwards
+}
+
+.card {
+    position: relative
+}
+
+.card.loaded {
+    animation: cardPop .36s cubic-bezier(.2, .9, .3, 1) forwards
+}
+
+@keyframes cardPop {
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+.card.loaded .card-main {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: fadeUp .36s .06s forwards
+}
+
+.card.loaded .card-details {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: fadeUp .36s .12s forwards
+}
+
+.card.loaded .forecast .day {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: stagger .36s forwards
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+@keyframes stagger {
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+.forecast .day:nth-child(1) {
+    animation-delay: .14s
+}
+
+.forecast .day:nth-child(2) {
+    animation-delay: .18s
+}
+
+.forecast .day:nth-child(3) {
+    animation-delay: .22s
+}
+
+.forecast .day:nth-child(4) {
+    animation-delay: .26s
+}
+
+.forecast .day:nth-child(5) {
+    animation-delay: .30s
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes emojiFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg)
+    }
+
+    50% {
+        transform: translateY(-5px) rotate(-5deg)
+    }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0
+}
+
+.material-icons {
+    font-size: 18px;
+    vertical-align: middle;
+    margin-right: 6px;
+    opacity: 0.95
+}
+
+.card-details .icon-label {
+    display: flex;
+    align-items: center;
+    gap: 8px
+}
+
+@media (max-width:420px) {
+    .card {
+        width: 280px;
+        height: 280px
+    }
+
+    .controls input {
+        width: 110px
+    }
+
+    .forecast .day img {
+        width: 36px;
+        height: 36px
+    }
+}
+
+/* expanded details card */
+.card-extra {
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.012));
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.22);
+    color: #eaf6ff;
+    line-height: 1.45;
+    display: grid;
+    gap: 10px;
+    transition: transform .22s cubic-bezier(.2, .9, .3, 1), opacity .18s ease;
+}
+
+.card-extra h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.card-extra-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.card-extra-item {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.card-extra-item strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.card-extra.hidden {
+    display: none
+}
+
+
+/* Survey floating button (outside card) */
+#backToTop {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: linear-gradient(135deg, #6a8cff, #5ad0ff);
+    color: #eff2f4;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 12px;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    box-shadow: 0 10px 26px rgba(18, 43, 70, 0.18);
+    cursor: pointer;
+    font-weight: 600;
+    backdrop-filter: blur(6px);
+    transition: transform .18s ease, box-shadow .18s ease, opacity .12s;
+    z-index: 60;
+}
+
+#backToTop .material-icons {
+    font-size: 18px;
+    color: rgba(242, 241, 241, 0.95);
+}
+
+#backToTop:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(18, 43, 70, 0.22);
+}
+
+/* Survey page form */
+.survey-wrap {
+    max-width: 640px;
+    margin: 48px auto;
+    padding: 24px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(4, 8, 15, 0.28);
+    animation: surveyCardIn .55s cubic-bezier(.2, .9, .3, 1) both;
+}
+
+.survey-hero {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.survey-hero h1 {
+    margin: 0;
+    font-size: 34px;
+    color: black;
+}
+
+.survey-hero p {
+    margin: 0;
+    opacity: 0.84;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.499)
+}
+
+/* removed playful badge decorations for professional survey look */
+
+.survey-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.survey-form label {
+    font-size: 14px;
+    color: #050606
+}
+
+/* removed emoji marker styles for professional survey */
+
+.survey-form input[type="text"],
+.survey-form input[type="email"],
+.survey-form textarea,
+.survey-form select {
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.survey-form input[type="text"]:focus,
+.survey-form input[type="email"]:focus,
+.survey-form textarea:focus,
+.survey-form select:focus {
+    transform: translateY(-2px);
+    border-color: rgba(90, 208, 255, 0.6);
+    box-shadow: 0 0 0 3px rgba(90, 208, 255, 0.14);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.survey-form input[type="text"],
+.survey-form input[type="email"],
+.survey-form textarea,
+.survey-form select {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: transparent;
+    color: #020303;
+}
+
+.survey-form textarea {
+    min-height: 100px;
+    resize: vertical
+}
+
+.survey-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center
+}
+
+.btn-primary {
+    background: #6a8cff;
+    color: #fbfafa;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer
+}
+
+.btn-primary,
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+
+.btn-primary:hover,
+.btn-ghost:hover {
+    transform: translateY(-2px) scale(1.01);
+}
+
+#surveyMsg {
+    min-height: 22px;
+    animation: messageIn .25s ease both;
+}
+
+#surveyMsg.message-flash {
+    animation: messageFlash .45s ease;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #050505;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    cursor: pointer
+}
+
+@media (max-width:600px) {
+    #backToTop {
+        right: 12px;
+        bottom: 12px;
+        padding: 8px 10px
+    }
+
+    .survey-wrap {
+        margin: 24px;
+        padding: 16px
+    }
+
+    .survey-hero h1 {
+        font-size: 28px;
+    }
+
+    /* responsive adjustments for survey simplified */
+}
+
+@keyframes surveyCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* removed survey float and emoji pop keyframes to keep survey page professional */
+
+@keyframes messageIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes messageFlash {
+    0% {
+        transform: scale(0.98);
+        opacity: 0.2;
+    }
+
+    60% {
+        transform: scale(1.02);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

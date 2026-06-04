@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Weather App</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="app-wrap">
+        <section class="panel">
+            <header class="panel-header">
+                <div class="title-wrap">
+                    <h1 class="title">Weather</h1>
+                    <div class="weather-emojis" aria-hidden="true">
+                        <span class="weather-emoji">☀️</span>
+                        <span class="weather-emoji">⛅</span>
+                        <span class="weather-emoji">🌧️</span>
+                    </div>
+                </div>
+                <div class="controls">
+                    <label class="sr-only" for="city">City</label>
+                    <input id="city" type="text" placeholder="Search city or ZIP" aria-label="City">
+                    <button id="searchBtn" aria-label="Search"><span class="material-icons">search</span></button>
+                    <button id="lastBtn" title="Use last searched city"><span
+                            class="material-icons">history</span></button>
+                </div>
+            </header>
+
+            <div class="meta">
+                <div class="unit-toggle">
+                    <button id="unitC" class="active">°C</button>
+                    <button id="unitF">°F</button>
+                </div>
+            </div>
+
+            <section id="result" class="result" aria-live="polite">
+                <div id="loading" class="loading hidden" aria-hidden="true"></div>
+                <div id="weatherCard" class="card hidden">
+                    <div class="card-main">
+                        <div class="icon" id="weatherIcon"></div>
+                        <div>
+                            <h2 id="loc"></h2>
+                            <div class="temp" id="temp"></div>
+                            <div class="desc" id="desc"></div>
+                            <div class="card-mood-strip" aria-hidden="true">
+                                <span class="card-mood">🌦️</span>
+                                <span class="card-mood">🌬️</span>
+                                <span class="card-mood">🌙</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-details" id="details"></div>
+                    <div id="forecast" class="forecast"></div>
+                </div>
+                <div id="cardExtra" class="card-extra hidden" aria-hidden="true"></div>
+            </section>
+        </section>
+    </main>
+
+    <button id="backToTop" title="Open survey" aria-label="Open survey form" role="link">
+        <span class="material-icons" aria-hidden="true">campaign</span>
+        <span>Survey</span>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

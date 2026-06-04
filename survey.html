@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Survey</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="app-wrap">
+        <section class="panel">
+            <div class="survey-wrap">
+                <div class="survey-hero">
+                    <h1>Quick Survey</h1>
+                    <p>Help us improve the weather app — we appreciate your feedback.</p>
+                </div>
+                <form id="surveyForm" class="survey-form" novalidate>
+                    <label for="name">Name (optional)</label>
+                    <input id="name" name="name" type="text" placeholder="Your name">
+
+                    <label for="email">Email (optional)</label>
+                    <input id="email" name="email" type="email" placeholder="you@example.com">
+
+                    <label for="rating">How satisfied are you?</label>
+                    <select id="rating" name="rating" required>
+                        <option value="">Select...</option>
+                        <option value="5">5 — Very satisfied</option>
+                        <option value="4">4 — Satisfied</option>
+                        <option value="3">3 — Neutral</option>
+                        <option value="2">2 — Unsatisfied</option>
+                        <option value="1">1 — Very unsatisfied</option>
+                    </select>
+
+                    <label for="comments">Comments</label>
+                    <textarea id="comments" name="comments" placeholder="Any feedback..."></textarea>
+
+                    <div class="survey-actions">
+                        <button type="submit" class="btn-primary">Submit</button>
+                        <a href="weather.html" class="btn-ghost" id="backLink">Back to Weather</a>
+                    </div>
+
+                    <div id="surveyMsg" style="margin-top:8px;opacity:0.9"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="survey.js"></script>
+</body>
+
+</html>
